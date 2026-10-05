@@ -1,12 +1,13 @@
 services:
+
   postgres:
     image: postgres:16-alpine
-    container_name: cursos_postgres
+    container_name: postgres
 
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cursos_db
 
     ports:
       - "5432:5432"
@@ -14,5 +15,38 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+    networks:
+      - db-network
+
+
+  api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+
+    container_name: api-nestjs
+
+    environment:
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: cursos_db
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - postgres
+
+    networks:
+      - db-network
+
+
 volumes:
   postgres_data:
+
+
+networks:
+  db-network:
