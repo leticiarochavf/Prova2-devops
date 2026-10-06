@@ -12,3 +12,16 @@ O projeto foi separado em 3 pastas:
 api/
 front/
 deploy/
+
+No projeto foram utilizadas:
+
+- PostgreSQL
+- NestJS
+- TypeORM
+- React
+- Vite
+- Nginx
+- Docker
+- Docker Compose
+- Swagger
+- Git e GitHub
